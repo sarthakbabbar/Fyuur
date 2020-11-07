@@ -38,10 +38,22 @@
 			<i class="fas fa-moon"></i> Not currently seeking performance venues
 		</p>
 		{% endif %}
+
+		<div>
+      <a href="/atists/{{ artist.id }}/edit">
+        <button class="btn btn-primary btn-lg ">
+          Edit Artist
+        </button>
+      </a>
+      <button id="delete" data-id="{{ artist.id }}" class="btn btn-primary btn-lg ">
+        Delete Artist
+      </button>
+    </div>
 	</div>
 	<div class="col-sm-6">
 		<img src="{{ artist.image_link }}" alt="Venue Image" />
 	</div>
+
 </div>
 <section>
 	<h2 class="monospace">{{ artist.upcoming_shows_count }} Upcoming {% if artist.upcoming_shows_count == 1 %}Show{% else %}Shows{% endif %}</h2>
@@ -71,6 +83,14 @@
 		{% endfor %}
 	</div>
 </section>
-
+<script>
+  const deleteBtn = document.getElementById('delete')
+  deleteBtn.onclick = function(e) {
+    const venueId = e.target.dataset['id']
+    fetch('/artists/' + venueId, {
+      method: 'DELETE'
+    })
+  }
+</script>
 {% endblock %}
 
